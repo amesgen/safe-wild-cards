@@ -43,6 +43,6 @@ fieldsPrefixed prefix recordConstructor = do
   cons <- reifyConstructor recordConstructor
   case constructorVariant cons of
     RecordConstructor recordFields ->
-      conP recordConstructor (map (varP . mkName . (prefix <>) . nameBase) recordFields)
+      conP recordConstructor (map (varP . mkName . (prefix ++) . nameBase) recordFields)
     _ -> fail $
       "Expected " ++ show recordConstructor ++ " to be a record constructor"
