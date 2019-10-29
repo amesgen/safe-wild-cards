@@ -1,5 +1,5 @@
 -- | Use @RecordWildCards@ safely.
-module Tame (fields, fieldsPrefixed) where
+module SafeWildCards (fields, fieldsPrefixed) where
 
 import Language.Haskell.TH (Name, PatQ, mkName, conP, varP, nameBase)
 import Language.Haskell.TH.Datatype

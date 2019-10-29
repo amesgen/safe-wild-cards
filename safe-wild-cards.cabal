@@ -1,6 +1,6 @@
 cabal-version: >=1.10
 
-name: tame
+name: safe-wild-cards
 version: 1.0.0
 synopsis: Use RecordWildCards safely
 description:
@@ -9,7 +9,7 @@ license: BSD3
 license-file: LICENSE
 author: Artyom Kazak
 maintainer: Monadfix <hi@monadfix.com>
-homepage: https://github.com/monadfix/tame
+homepage: https://github.com/monadfix/safe-wild-cards
 category: Control
 build-type: Simple
 extra-source-files:
@@ -24,11 +24,11 @@ tested-with:
 
 source-repository head
   type: git
-  location: git@github.com:monadfix/tame.git
+  location: git@github.com:monadfix/safe-wild-cards.git
 
 library
   exposed-modules:
-    Tame
+    SafeWildCards
   build-depends:
     base ==4.*,
     template-haskell ==2.*,
