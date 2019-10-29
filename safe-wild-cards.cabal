@@ -68,8 +68,8 @@ library
   exposed-modules:
     SafeWildCards
   build-depends:
-    base ==4.*,
-    template-haskell ==2.*,
+    base <4.13,
+    template-haskell <2.16,
     th-abstraction ==0.3.*
   hs-source-dirs:
     src
