@@ -1,2 +1,3 @@
 # tame
-Tame RecordWildCards
+
+Use `RecordWildCards` safely.
