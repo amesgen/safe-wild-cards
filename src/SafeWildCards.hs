@@ -1,7 +1,7 @@
 -- | Use @-XRecordWildCards@ safely.
 module SafeWildCards (fields, fieldsPrefixed, fieldsNamed) where
 
-import Language.Haskell.TH (Name, PatQ, mkName, conP, varP, nameBase)
+import Language.Haskell.TH (Name, PatQ, mkName, conP, varP, nameBase, recover)
 import Language.Haskell.TH.Datatype
 
 -- | Put all fields of a record constructor into scope.
@@ -44,7 +44,18 @@ fieldsPrefixed prefix = fieldsNamed (prefix ++)
 -- | General form of 'fields' and 'fieldsPrefixed'.
 fieldsNamed :: (String -> String) -> Name -> PatQ
 fieldsNamed f recordConstructor = do
-  cons <- reifyConstructor recordConstructor
+  cons <-
+    recover
+      (fail $
+         "Could not find " ++ nameBase recordConstructor ++ ". If it is defined in the same module where you are using\n" ++
+         "      'safe-wild-cards', you need to break the declaration group like this:\n" ++
+         "\n" ++
+         "          data ... = " ++ nameBase recordConstructor ++ " ...\n" ++
+         "          $(pure [])\n" ++
+         "\n" ++
+         "      Read the 'SafeWildCards' module documentation for more details.\n"
+      )
+      (reifyConstructor recordConstructor)
   case constructorVariant cons of
     RecordConstructor recordFields ->
       conP recordConstructor (map (varP . mkName . f . nameBase) recordFields)
