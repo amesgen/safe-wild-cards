@@ -27,6 +27,18 @@ import Language.Haskell.TH.Datatype
 -- instance ToJSON Rec where
 --   toJSON $(fields 'Rec) = ...
 -- @
+--
+-- __Note:__ if you want to define the data type and use 'fields' in the
+-- same module, you will need to add @\$(pure [])@ after the type
+-- declaration. See the post about <https://blog.monadfix.com/th-groups declaration groups>
+-- for more details. Your code will look like this:
+--
+-- @
+-- data Rec = ...
+-- \$(pure [])
+--
+-- f $(fields 'Rec) = ...
+-- @
 fields :: Name -> PatQ
 fields = fieldsNamed id
 
