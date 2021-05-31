@@ -61,10 +61,8 @@ fieldsNamed f recordConstructor = do
       (fail $
          "Could not find " ++ nameBase recordConstructor ++ ". If it is defined in the same module where you are using\n" ++
          "      'safe-wild-cards', you need to break the declaration group like this:\n" ++
-         "\n" ++
          "          data ... = " ++ nameBase recordConstructor ++ " ...\n" ++
          "          $(pure [])\n" ++
-         "\n" ++
          "      Read the 'SafeWildCards' module documentation for more details.\n"
       )
       (reifyConstructor recordConstructor)
