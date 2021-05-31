@@ -1,5 +1,5 @@
--- | Use @RecordWildCards@ safely.
-module SafeWildCards (fields, fieldsPrefixed) where
+-- | Use @-XRecordWildCards@ safely.
+module SafeWildCards (fields, fieldsPrefixed, fieldsNamed) where
 
 import Language.Haskell.TH (Name, PatQ, mkName, conP, varP, nameBase)
 import Language.Haskell.TH.Datatype
@@ -7,8 +7,9 @@ import Language.Haskell.TH.Datatype
 -- | Put all fields of a record constructor into scope.
 --
 -- @f $(fields 'Rec) = ...@ is equivalent to @f Rec{..}@, but the compiler
--- will warn you on all unused fields. Thus 'fields' brings safety whenever
--- you want to guarantee that a certain function uses all fields of @Rec@.
+-- will warn you about all unused fields. Thus 'fields' brings compile-time
+-- safety whenever you want to guarantee that a certain function uses all
+-- fields of @Rec@.
 --
 -- To explicitly ignore a field, match it against @_@:
 --
@@ -27,22 +28,25 @@ import Language.Haskell.TH.Datatype
 --   toJSON $(fields 'Rec) = ...
 -- @
 fields :: Name -> PatQ
-fields recordConstructor = do
-  cons <- reifyConstructor recordConstructor
-  case constructorVariant cons of
-    RecordConstructor recordFields ->
-      conP recordConstructor (map (varP . mkName . nameBase) recordFields)
-    _ -> fail $
-      "Expected " ++ show recordConstructor ++ " to be a record constructor"
+fields = fieldsNamed id
 
 -- | Like 'fields', but prefixes all fields with the given prefix.
 --
--- Useful if you need to put fields from more than one record into scope.
+-- Useful if you need to put fields from more than one record into scope:
+--
+-- @
+-- diff :: Rec -> Rec -> Text
+-- diff $(fieldsPrefixed "a_" 'Rec) $(fieldsPrefixed "b_" 'Rec) = ...
+-- @
 fieldsPrefixed :: String -> Name -> PatQ
-fieldsPrefixed prefix recordConstructor = do
+fieldsPrefixed prefix = fieldsNamed (prefix ++)
+
+-- | General form of 'fields' and 'fieldsPrefixed'.
+fieldsNamed :: (String -> String) -> Name -> PatQ
+fieldsNamed f recordConstructor = do
   cons <- reifyConstructor recordConstructor
   case constructorVariant cons of
     RecordConstructor recordFields ->
-      conP recordConstructor (map (varP . mkName . (prefix ++) . nameBase) recordFields)
+      conP recordConstructor (map (varP . mkName . f . nameBase) recordFields)
     _ -> fail $
       "Expected " ++ show recordConstructor ++ " to be a record constructor"
