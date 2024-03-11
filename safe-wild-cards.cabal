@@ -23,8 +23,12 @@ tested-with:
   GHC ==8.4.4
   GHC ==8.6.5
   GHC ==8.8.4
-  GHC ==8.10.4
-  GHC ==9.0.1
+  GHC ==8.10.7
+  GHC ==9.0.2
+  GHC ==9.2.8
+  GHC ==9.4.8
+  GHC ==9.6.4
+  GHC ==9.8.2
 
 source-repository head
   type: git
@@ -35,8 +39,8 @@ library
     SafeWildCards
   build-depends:
     base <5,
-    template-haskell <2.18,
-    th-abstraction >=0.3 && <0.5
+    template-haskell <2.22,
+    th-abstraction >=0.3 && <0.7
   hs-source-dirs:
     src
   default-language:
