@@ -1,7 +1,7 @@
 cabal-version: >=1.10
 
 name: safe-wild-cards
-version: 1.0.1
+version: 1.0.0.1
 synopsis: Use RecordWildCards safely
 description:
   @-XRecordWildCards@ is convenient, but sometimes you want to assert that
