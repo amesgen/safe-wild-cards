@@ -1,4 +1,4 @@
-cabal-version: >=1.10
+cabal-version: 3.0
 
 name: safe-wild-cards
 version: 1.0.0.1
@@ -7,16 +7,17 @@ description:
   @-XRecordWildCards@ is convenient, but sometimes you want to assert that
   you have handled all fields of a record, and there is no easy way to do that.
 
-license: BSD3
+license: BSD-3-Clause
 license-file: LICENSE
 author: Emily April Kazak
-maintainer: Monadfix <hi@monadfix.com>
+maintainer: amesgen <amesgen@amesgen.de>
 homepage: https://github.com/monadfix/safe-wild-cards
 category: Control
 build-type: Simple
 extra-source-files:
-  CHANGELOG.md
   README.md
+extra-doc-files:
+  CHANGELOG.md
 tested-with:
   GHC ==8.0.2
   GHC ==8.2.2
@@ -27,8 +28,9 @@ tested-with:
   GHC ==9.0.2
   GHC ==9.2.8
   GHC ==9.4.8
-  GHC ==9.6.4
+  GHC ==9.6.5
   GHC ==9.8.2
+  GHC ==9.10.1
 
 source-repository head
   type: git
@@ -39,8 +41,8 @@ library
     SafeWildCards
   build-depends:
     base <5,
-    template-haskell <2.22,
-    th-abstraction >=0.3 && <0.7
+    template-haskell <2.23,
+    th-abstraction >=0.3 && <0.8
   hs-source-dirs:
     src
   default-language:
